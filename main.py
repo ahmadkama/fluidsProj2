@@ -1,4 +1,6 @@
 import math
+import matplotlib.pyplot as plt
+import numpy as np
 
 ts = [199, 214, 266, 288]
 Ls = [0.2, 0.3, 0.4, 0.6]
@@ -47,3 +49,28 @@ for L in Ls_tee:
 
     time = -2*D*(math.sqrt(L*sin_theta+h2) - math.sqrt(L*sin_theta+h1))
     print("L: ", L, "Time: ", time)
+
+mu = 1.0016 * 10**-3
+row = 997
+
+for L in Ls:
+    h = np.linspace(0.02, 0.10, 1000)
+    Re = row * L / mu * ((L*sin_theta + h) / (f_val*L/2/g/d1 + k1/2/g))**0.5
+
+    plt.plot(h, Re)
+    plt.title(f"Straight pipe of length {L}m")
+    plt.xlabel("Height of water [m]")
+    plt.ylabel("Reyonlds Number")
+    plt.show()
+
+for L in Ls_tee:
+    C = (f_val*L)/(2*g*d1) + k1/(2*g) + B*k2 - A/(2*g)
+
+    h = np.linspace(0.02, 0.10, 1000)
+    Re = row * L / mu * ((h+L*sin_theta) / C)**0.5
+
+    plt.plot(h, Re)
+    plt.title(f"T pipe of length {L}m")
+    plt.xlabel("Height of water [m]")
+    plt.ylabel("Reyonlds Number")
+    plt.show()
